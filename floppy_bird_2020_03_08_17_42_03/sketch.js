@@ -19,7 +19,6 @@ function setup() {
 }
 
 function draw() {
-  resizeCanvas(windowWidth, windowHeight);
   background(220, 220, 255);
   translate(width / 2, height / 2);
   scale(s);
