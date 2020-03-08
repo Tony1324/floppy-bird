@@ -10,7 +10,7 @@ var hscore = 0;
 var dif = 500;
 
 function setup() {
-  createCanvas(windowWidth - 20, windowHeight - 20);
+  createCanvas(windowWidth, windowHeight);
   p = new createVector(0, 0)
   v = new createVector(0, -5)
   a = new createVector(0, 0.1)
@@ -19,9 +19,7 @@ function setup() {
 }
 
 function draw() {
-  function windowResized() {
-    resizeCanvas(windowWidth - 20, windowHeight - 20);
-  }
+  resizeCanvas(windowWidth, windowHeight);
   background(220, 220, 255);
   translate(width / 2, height / 2);
   scale(s);
