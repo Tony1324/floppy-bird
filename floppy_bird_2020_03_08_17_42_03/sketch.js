@@ -93,13 +93,11 @@ function draw() {
       rect(px[i], py[i], 200, 400, 25)
       if (p.x > px[i] && p.x < px[i] + 200 && p.y > py[i] && p.y < py[i] + 400) {
         die = true;
-        d.set(0,-0.5)
       }
     }  
   }
   if (p.y + 10 + 200 > height / 2 / s) {
      die = true;
-     d.set(0,-0.5)
   }
 
   if(!die){
@@ -175,6 +173,9 @@ function draw() {
       p.y+=200
       p.mult(0.9*atan(p.mag()/10)/PI*2)
       p.y-=200
+      d.y+=0.5
+      d.mult(0.9)
+      d.y-=0.5
   }
 
   if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
