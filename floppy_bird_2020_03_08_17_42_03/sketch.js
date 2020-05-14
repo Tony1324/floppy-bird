@@ -39,6 +39,7 @@ function draw() {
     p.add(v);
     a.set(0, 0.1);
   }
+  if(p.x<-100){v.x+=1}
 
 
 
@@ -94,12 +95,12 @@ function draw() {
         die = true;
         d.set(0,-0.5)
       }
+    }  
+  }
       if (p.y + 10 + 200 > height / 2 / s) {
         die = true;
         d.set(0,-0.5)
       }
-    }
-  }
 
   if(!die){
     score = round(p.x / 100);
@@ -131,72 +132,3 @@ function draw() {
         age.splice([i],1);
 	}
  }
-
-  
-  fill(0);
-  textSize(200);
-  textFont('monoSpace');
-  text("===>",0,0);
-  
-  strokeWeight(5);
-  stroke(0,0,100);
-  quad(p.x-d.y*15, p.y+d.x*15, p.x + d.x * 40, p.y + d.y * 40,p.x+d.y*15,p.y-d.x*15,p.x+d.x*5,p.y+d.y*5);
-  
-  translate(p.x + width/s/2-600, 0);
-  
-  fill(50,90,180);
-  strokeWeight(20);
-  rect(-width / 2 / s-20, height / 2 / s - 200, width / s+40, height / s)
-
-  
-  if(die){
-  stroke(0,0,100,300-p.mag()/10)
-  fill(80,150,255,300-p.mag()/10)
-  rect(-width/4/s,-height/4/s-200,width/2/s,height/2/s,50);
-
-  strokeWeight(0);
-  fill(0,300-p.mag()/10)
-  textAlign(CENTER)
-  textSize(500)
-  textFont("futura")
-  text("score:\n"+score,0,-400)
-  }else{strokeWeight(0)}
-
-  textAlign(LEFT)
-  textSize(50);
-  fill(0);
-  textFont('futura');
-  text("score: " + score, -width / 2 / s + 50, -height / 2 / s + 100);
-  text("high score: " + hscore, width / 2 / s - 500, -height / 2 / s + 100);
-
-
-  if(die == true){
-      p.y+=200
-      p.mult(0.9*atan(p.mag()/10)/PI*2)
-      p.y-=200
-  }
-
-  if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
-      px.length = 0
-      py.length = 0
-      v.mult(0);
-      a.mult(0)
-
-  }
-
-  if(mouseIsPressed){
-    if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
-        die = false
-    }
-  }
-
-}
-
-
-function keyPressed() {
-  if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87)) {
-    if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
-      die = false
-    }
-  }
-}
