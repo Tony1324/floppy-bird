@@ -14,6 +14,8 @@ var dif = 500;
 var trailX = [];
 var trailY = [];
 var age = [];
+var die = false;
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -32,17 +34,24 @@ function draw() {
   scale(s);
   stroke(0,0,100)
 
-  v.add(a);
-  p.add(v);
-  a.set(0, 0.1);
+  if(!die){
+    v.add(a);
+    p.add(v);
+    a.set(0, 0.1);
+  }
+
+
+
+
 
   if (p.y - 10 < -height / 2 / s) {
     v.y = 0;
     p.y = constrain(p.y, -height / 2 / s + 10, height / 2 / s - 10 - 200);
   }
 
-  if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87)) {
+  if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87) || mouseIsPressed) {
     a.add(d);
+    //die = false;
   }
 
   if (keyIsDown(37) || keyIsDown(65)) {
@@ -62,7 +71,6 @@ function draw() {
     d.y=p.y-(mouseY/s-height/2/s)
     d.normalize();
     d.mult(-0.5);
-    a.add(d)
   }
 
   translate(-p.x - width/s/2+600,0);
@@ -81,27 +89,20 @@ function draw() {
   
   for (let i = 0; i < px.length; i++) {
     strokeWeight(20);
-    rect(px[i], py[i], 200, 400)
+    rect(px[i], py[i], 200, 400, 25)
     if (p.x > px[i] && p.x < px[i] + 200 && p.y > py[i] && p.y < py[i] + 400) {
-      px.length = 0
-      py.length = 0
-      v.mult(0);
-      p.x = 0
-      p.y = -200
-      d.set(0, -0.5)
+      die = true;
+      d.set(0,-0.5)
     }
     if (p.y + 10 + 200 > height / 2 / s) {
-      px.length = 0
-      py.length = 0
-      v.mult(0);
-      p.x = 0
-      p.y = -200
-      d.set(0, -0.5);
+      die = true;
+      d.set(0,-0.5)
     }
   }
 
-  score = round(p.x / 100);
-
+  if(!die){
+    score = round(p.x / 100);
+  }
   if (hscore<score) {
     hscore = score
   }
@@ -131,9 +132,6 @@ function draw() {
  }
 
   
-      
-  
-  
   fill(0);
   textSize(200);
   textFont('monoSpace');
@@ -148,13 +146,44 @@ function draw() {
   fill(50,90,180);
   strokeWeight(20);
   rect(-width / 2 / s-20, height / 2 / s - 200, width / s+40, height / s)
+
   
-  textSize(50);
+  if(die){
+  fill(80,150,255)
+  rect(-width/4/s,-height/4/s-200,width/2/s,height/2/s,50);
+
   strokeWeight(0);
+  fill(0)
+  textAlign(CENTER)
+  textSize(500)
+  textFont("futura")
+  text("score:\n"+score,0,-400)
+  }else{strokeWeight(0)}
+
+  textAlign(LEFT)
+  textSize(50);
   fill(0);
   textFont('futura');
   text("score: " + score, -width / 2 / s + 50, -height / 2 / s + 100);
   text("high score: " + hscore, width / 2 / s - 500, -height / 2 / s + 100);
 
+
+  if(die == true){
+      px.length = 0
+      py.length = 0
+      v.mult(0);
+      a.mult(0)
+      p.x = 0
+      p.y = -200
+  }
+
+}
+
+
+function keyPressed() {
+  if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87)) {
+    die = false
+
+  }
 
 }
