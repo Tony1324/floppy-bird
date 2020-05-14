@@ -15,7 +15,7 @@ var trailX = [];
 var trailY = [];
 var age = [];
 var die = false;
-
+var p1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -51,7 +51,6 @@ function draw() {
 
   if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87) || mouseIsPressed) {
     a.add(d);
-    //die = false;
   }
 
   if (keyIsDown(37) || keyIsDown(65)) {
@@ -76,7 +75,7 @@ function draw() {
   translate(-p.x - width/s/2+600,0);
   
   if (px.length == 0) {
-    px.push(width / s + p.x - 590);
+    px.push(width / s + p.x - 580);
     py.push(random(-height / 2 / s, height / 2 / s - 400));
   }
 
@@ -115,19 +114,19 @@ function draw() {
 	for (var i = 0; i < 20; i++) {
 		trailX.push(p.x+d.x*15);
 		trailY.push(p.y+d.y*15);
-        age.push(20);
+        age.push(20+random(-5,5));
 	}
 		
  }
 	for (let i = 0; i < trailX.length; i++) {
-        strokeWeight(210-age[i]*10)
+        strokeWeight(170-age[i]*10)
         stroke(255,age[i]/2)
 		    point(trailX[i],trailY[i])
 	      age[i] -=0.5
         if(age[i] <= 0){
-	     	trailX.splice(0,1)
-		    trailY.splice(0,1)
-        age.splice(0,1);
+	     	trailX.splice([i],1)
+		    trailY.splice([i],1)
+        age.splice([i],1);
 	}
  }
 
@@ -149,11 +148,12 @@ function draw() {
 
   
   if(die){
-  fill(80,150,255)
+  stroke(0,0,100,300-p.mag()/10)
+  fill(80,150,255,300-p.mag()/10)
   rect(-width/4/s,-height/4/s-200,width/2/s,height/2/s,50);
 
   strokeWeight(0);
-  fill(0)
+  fill(0,300-p.mag()/10)
   textAlign(CENTER)
   textSize(500)
   textFont("futura")
@@ -169,21 +169,28 @@ function draw() {
 
 
   if(die == true){
+      p.y+=200
+      p.mult(0.9*atan(p.mag()/10)/PI*2)
+      p.y-=200
+  }
+
+  if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
       px.length = 0
       py.length = 0
       v.mult(0);
       a.mult(0)
-      p.x = 0
-      p.y = -200
+
   }
+
 
 }
 
 
 function keyPressed() {
   if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87)) {
-    die = false
-
+    if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
+      die = false
+    }
   }
 
 }
