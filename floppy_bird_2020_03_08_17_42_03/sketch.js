@@ -87,15 +87,17 @@ function draw() {
   fill(160, 220, 255);
   
   for (let i = 0; i < px.length; i++) {
-    strokeWeight(20);
-    rect(px[i], py[i], 200, 400, 25)
-    if (p.x > px[i] && p.x < px[i] + 200 && p.y > py[i] && p.y < py[i] + 400) {
-      die = true;
-      d.set(0,-0.5)
-    }
-    if (p.y + 10 + 200 > height / 2 / s) {
-      die = true;
-      d.set(0,-0.5)
+    if(abs(px[i]-p.x)<width/s+200){
+      strokeWeight(20);
+      rect(px[i], py[i], 200, 400, 25)
+      if (p.x > px[i] && p.x < px[i] + 200 && p.y > py[i] && p.y < py[i] + 400) {
+        die = true;
+        d.set(0,-0.5)
+      }
+      if (p.y + 10 + 200 > height / 2 / s) {
+        die = true;
+        d.set(0,-0.5)
+      }
     }
   }
 
@@ -110,7 +112,7 @@ function draw() {
 
 
   strokeWeight(0)
- if (keyIsDown(38) || keyIsDown(32) || keyIsDown(87) || mouseIsPressed) {
+ if ((keyIsDown(38) || keyIsDown(32) || keyIsDown(87) || mouseIsPressed) && frameCount%2==0) {
 	for (var i = 0; i < 20; i++) {
 		trailX.push(p.x+d.x*15);
 		trailY.push(p.y+d.y*15);
@@ -182,6 +184,11 @@ function draw() {
 
   }
 
+  if(mouseIsPressed){
+    if(p.x <= 5 && p.x>=-5 && p.y >= -205 && p.y<=-195 && die){
+        die = false
+    }
+  }
 
 }
 
@@ -192,5 +199,4 @@ function keyPressed() {
       die = false
     }
   }
-
 }
